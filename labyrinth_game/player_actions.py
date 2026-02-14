@@ -17,22 +17,33 @@ def get_input(prompt="> "):
         return "quit"
 
 def move_player(game_state, direction):
-    """Перемещает игрока в указанном направлении, если выход существует."""
-    from labyrinth_game.utils import random_event
-    current_room = game_state['current_room']
-    room = ROOMS[current_room]  # нужно импортировать ROOMS в начале файла
+    """Перемещает игрока в указанном направлении, если выход существует и комната доступна."""
+    from labyrinth_game.utils import random_event, describe_current_room
 
-    if direction in room['exits']:
-        new_room = room['exits'][direction]
-        game_state['current_room'] = new_room
-        game_state['steps_taken'] += 1
-        print(f"\nВы переместились {direction}.\n")
-        from labyrinth_game.utils import describe_current_room
-        describe_current_room(game_state)
-        random_event(game_state)
-    else:
+    current_room = game_state['current_room']
+    room = ROOMS[current_room]
+
+    if direction not in room['exits']:
         print("Нельзя пойти в этом направлении.")
-        
+        return
+
+    next_room = room['exits'][direction]
+
+    # Особая проверка: если следующая комната — treasure_room, нужен ключ
+    if next_room == 'treasure_room':
+        if 'rusty_key' in game_state['player_inventory']:
+            print("Вы используете найденный ключ, чтобы открыть путь в комнату сокровищ.")
+        else:
+            print("Дверь заперта. Нужен ключ, чтобы пройти дальше.")
+            return  # не перемещаемся
+
+    # Перемещение
+    game_state['current_room'] = next_room
+    game_state['steps_taken'] += 1
+    print(f"\nВы переместились {direction}.\n")
+    describe_current_room(game_state)
+    random_event(game_state)
+
 def take_item(game_state, item_name):
     """Подбирает предмет из текущей комнаты, если он там есть."""
     current_room = game_state['current_room']

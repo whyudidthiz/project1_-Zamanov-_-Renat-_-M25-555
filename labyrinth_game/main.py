@@ -2,6 +2,7 @@
 
 from labyrinth_game.constants import ROOMS
 from labyrinth_game import utils, player_actions
+from labyrinth_game.constants import COMMANDS
 
 game_state = {
     'player_inventory': [],
@@ -16,6 +17,11 @@ def process_command(game_state, command):
 
     parts = command.split()
     action = parts[0]
+
+    # Односложные команды направления
+    if action in ['north', 'south', 'east', 'west']:
+        player_actions.move_player(game_state, action)
+        return
 
     match action:
         case "quit" | "exit":
@@ -56,7 +62,7 @@ def process_command(game_state, command):
                 utils.solve_puzzle(game_state)
 
         case "help":
-            utils.show_help()
+            utils.show_help(COMMANDS)
 
         case _:
             print("Неизвестная команда. Попробуйте: look, inventory, go <направление>, take <предмет>, use <предмет>, solve, help, quit")
