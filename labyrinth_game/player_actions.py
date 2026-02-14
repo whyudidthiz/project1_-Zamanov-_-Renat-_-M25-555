@@ -1,4 +1,3 @@
-# labyrinth_game/player_actions.py
 from labyrinth_game.constants import ROOMS
 
 def show_inventory(game_state):
@@ -19,6 +18,7 @@ def get_input(prompt="> "):
 
 def move_player(game_state, direction):
     """Перемещает игрока в указанном направлении, если выход существует."""
+    from labyrinth_game.utils import random_event
     current_room = game_state['current_room']
     room = ROOMS[current_room]  # нужно импортировать ROOMS в начале файла
 
@@ -27,9 +27,9 @@ def move_player(game_state, direction):
         game_state['current_room'] = new_room
         game_state['steps_taken'] += 1
         print(f"\nВы переместились {direction}.\n")
-        # Импортируем функцию describe_current_room из utils (добавим импорт)
         from labyrinth_game.utils import describe_current_room
         describe_current_room(game_state)
+        random_event(game_state)
     else:
         print("Нельзя пойти в этом направлении.")
         

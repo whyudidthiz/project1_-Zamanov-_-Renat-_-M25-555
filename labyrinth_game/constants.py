@@ -1,6 +1,3 @@
-# labyrinth_game/constants.py
-
-# labyrinth_game/constants.py
 
 ROOMS = {
     'entrance': {
@@ -40,9 +37,9 @@ ROOMS = {
         'puzzle': ('Дверь защищена кодом. Введите код (подсказка: это число пятикратного шага, 2*5= ? )', '10')
     },
     'crypt': {
-        'description': 'Мрачный склеп с каменными саркофагами. В углу мерцает холодный свет.',
+        'description': 'Мрачный склеп с каменными саркофагами. В углу мерцает слабый свет.',
         'exits': {'north': 'trap_room', 'east': 'library'},
-        'items': ['silver_cross'],
+        'items': ['silver_cross', 'treasure_key'],   # добавлен ключ
         'puzzle': ('На стене высечено: "Сколько букв в слове «тьма»?" (ответ цифрой)', '4')
     },
     'observatory': {
