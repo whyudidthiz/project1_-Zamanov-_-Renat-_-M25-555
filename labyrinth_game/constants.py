@@ -1,0 +1,54 @@
+# labyrinth_game/constants.py
+
+# labyrinth_game/constants.py
+
+ROOMS = {
+    'entrance': {
+        'description': 'Вы в темном входе лабиринта. Стены покрыты мхом. На полу лежит старый факел.',
+        'exits': {'north': 'hall', 'east': 'trap_room'},
+        'items': ['torch'],
+        'puzzle': None
+    },
+    'hall': {
+        'description': 'Большой зал с эхом. По центру стоит пьедестал с запечатанным сундуком.',
+        'exits': {'south': 'entrance', 'west': 'library', 'north': 'treasure_room'},
+        'items': [],
+        'puzzle': ('На пьедестале надпись: "Назовите число, которое идет после девяти". Введите ответ цифрой или словом.', '10')
+    },
+    'trap_room': {
+        'description': 'Комната с хитрой плиточной поломкой. На стене видна надпись: "Осторожно — ловушка".',
+        'exits': {'west': 'entrance', 'south': 'crypt'},          # south -> crypt
+        'items': ['rusty_key'],
+        'puzzle': ('Система плит активна. Чтобы пройти, назовите слово "шаг" три раза подряд (введите "шаг шаг шаг")', 'шаг шаг шаг')
+    },
+    'library': {
+        'description': 'Пыльная библиотека. На полках старые свитки. Где-то здесь может быть ключ от сокровищницы.',
+        'exits': {'east': 'hall', 'north': 'armory', 'west': 'crypt', 'south': 'observatory'},  # west,south
+        'items': ['ancient_book'],
+        'puzzle': ('В одном свитке загадка: "Что растет, когда его съедают?" (ответ одно слово)', 'резонанс')
+    },
+    'armory': {
+        'description': 'Старая оружейная комната. На стене висит меч, рядом — небольшая бронзовая шкатулка.',
+        'exits': {'south': 'library', 'west': 'observatory'},     # west -> observatory
+        'items': ['sword', 'bronze_box'],
+        'puzzle': None
+    },
+    'treasure_room': {
+        'description': 'Комната, на столе большой сундук. Дверь заперта — нужен особый ключ.',
+        'exits': {'south': 'hall'},
+        'items': ['treasure_chest'],
+        'puzzle': ('Дверь защищена кодом. Введите код (подсказка: это число пятикратного шага, 2*5= ? )', '10')
+    },
+    'crypt': {
+        'description': 'Мрачный склеп с каменными саркофагами. В углу мерцает холодный свет.',
+        'exits': {'north': 'trap_room', 'east': 'library'},
+        'items': ['silver_cross'],
+        'puzzle': ('На стене высечено: "Сколько букв в слове «тьма»?" (ответ цифрой)', '4')
+    },
+    'observatory': {
+        'description': 'Комната с открытым потолком, через который видно звездное небо. В центре стоит большой телескоп.',
+        'exits': {'north': 'library', 'east': 'armory'},
+        'items': ['telescope'],
+        'puzzle': ('На стене карта созвездий. Вопрос: "Какая планета видна в телескоп?" (ответ одним словом)', 'марс')
+    }
+}
