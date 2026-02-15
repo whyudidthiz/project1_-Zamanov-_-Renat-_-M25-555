@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
-from labyrinth_game.constants import ROOMS
-from labyrinth_game import utils, player_actions
+from labyrinth_game import player_actions, utils
 from labyrinth_game.constants import COMMANDS
 
 game_state = {
@@ -18,7 +17,6 @@ def process_command(game_state, command):
     parts = command.split()
     action = parts[0]
 
-    # Односложные команды направления
     if action in ['north', 'south', 'east', 'west']:
         player_actions.move_player(game_state, action)
         return
@@ -65,7 +63,9 @@ def process_command(game_state, command):
             utils.show_help(COMMANDS)
 
         case _:
-            print("Неизвестная команда. Попробуйте: look, inventory, go <направление>, take <предмет>, use <предмет>, solve, help, quit")
+            print("Неизвестная команда. Попробуйте: look, inventory, " \
+            "go <направление>," \
+            " take <предмет>, use <предмет>, solve, help, quit")
 
 def main():
     print("Добро пожаловать в Лабиринт сокровищ!")

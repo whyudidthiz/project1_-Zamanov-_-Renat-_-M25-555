@@ -1,5 +1,6 @@
 from labyrinth_game.constants import ROOMS
 
+
 def show_inventory(game_state):
     """ Содержимое инвентаря игрока."""
     inv = game_state['player_inventory']
@@ -17,8 +18,9 @@ def get_input(prompt="> "):
         return "quit"
 
 def move_player(game_state, direction):
-    """Перемещает игрока в указанном направлении, если выход существует и комната доступна."""
-    from labyrinth_game.utils import random_event, describe_current_room
+    """Перемещает игрока в указанном направлении, если выход существует  
+    и комната доступна."""
+    from labyrinth_game.utils import describe_current_room, random_event
 
     current_room = game_state['current_room']
     room = ROOMS[current_room]
@@ -29,15 +31,14 @@ def move_player(game_state, direction):
 
     next_room = room['exits'][direction]
 
-    # Особая проверка: если следующая комната — treasure_room, нужен ключ
     if next_room == 'treasure_room':
         if 'rusty_key' in game_state['player_inventory']:
-            print("Вы используете найденный ключ, чтобы открыть путь в комнату сокровищ.")
+            print("Вы используете найденный ключ, чтобы открыть путь в комнату " \
+            "сокровищ.")
         else:
             print("Дверь заперта. Нужен ключ, чтобы пройти дальше.")
-            return  # не перемещаемся
+            return  
 
-    # Перемещение
     game_state['current_room'] = next_room
     game_state['steps_taken'] += 1
     print(f"\nВы переместились {direction}.\n")
@@ -49,7 +50,6 @@ def take_item(game_state, item_name):
     current_room = game_state['current_room']
     room = ROOMS[current_room]
 
-    # Особый случай: сундук нельзя поднять
     if item_name == 'treasure_chest':
         print("Вы не можете поднять сундук, он слишком тяжелый.")
         return
@@ -74,7 +74,8 @@ def use_item(game_state, item_name):
     elif item_name == "bronze_box":
         if "rusty_key" not in game_state['player_inventory']:
             game_state['player_inventory'].append("rusty_key")
-            print("Вы открыли бронзовую шкатулку и нашли ржавый ключ! Он добавлен в инвентарь.")
+            print("Вы открыли бронзовую шкатулку и нашли ржавый ключ!" \
+            " Он добавлен в инвентарь.")
         else:
             print("Шкатулка уже открыта, внутри пусто.")
     else:

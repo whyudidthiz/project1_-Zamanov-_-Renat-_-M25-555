@@ -1,5 +1,7 @@
 import math
+
 from labyrinth_game.constants import ROOMS
+
 
 def describe_current_room(game_state):
     room_id = game_state['current_room']
@@ -150,9 +152,10 @@ def random_event(game_state):
             print("Вы хватаетесь за меч, и шорох затихает. Существо отпугнуто.")
 
     else:  
-        if game_state['current_room'] == 'trap_room' and 'torch' not in game_state['player_inventory']:
-            print("\nВы чувствуете, как пол под ногами начинает проваливаться!")
-            trigger_trap(game_state)
+        if (game_state['current_room'] == 'trap_room'
+            and 'torch' not in game_state['player_inventory']):
+                print("\nВы чувствуете, как пол под ногами начинает проваливаться!")
+                trigger_trap(game_state)
         else:
             pass
 
